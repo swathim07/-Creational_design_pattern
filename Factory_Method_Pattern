@@ -1,0 +1,70 @@
+#1.	Define the Product Interface:
+interface Document {
+    void open();
+    void save();
+}
+#2.	Create Concrete Product Classes:
+class WordDocument implements Document {
+    @Override
+    public void open() {
+        System.out.println("Opening Word document...");
+    }
+
+    @Override
+    public void save() {
+        System.out.println("Saving Word document...");
+    }
+}
+
+class PDFDocument implements Document {
+    @Override
+    public void open() {
+        System.out.println("Opening PDF document...");
+    }
+
+    @Override
+    public void save() {
+        System.out.println("Saving PDF document...");
+    }
+}
+#3.	Define the Creator Abstract Class:
+abstract class DocumentCreator {
+    public abstract Document createDocument();
+
+    public void openDocument() {
+        Document doc = createDocument();
+        doc.open();
+    }
+
+    public void saveDocument() {
+        Document doc = createDocument();
+        doc.save();
+    }
+}
+#4.	Create Concrete Creator Classes:
+class WordDocumentCreator extends DocumentCreator {
+    @Override
+    public Document createDocument() {
+        return new WordDocument();
+    }
+}
+
+class PDFDocumentCreator extends DocumentCreator {
+    @Override
+    public Document createDocument() {
+        return new PDFDocument();
+    }
+}
+#5.	Using the Factory Method Pattern:
+public class FactoryMethodPatternDemo {
+    public static void main(String[] args) {
+        DocumentCreator wordCreator = new WordDocumentCreator();
+        DocumentCreator pdfCreator = new PDFDocumentCreator();
+
+        wordCreator.openDocument();
+        wordCreator.saveDocument();
+
+        pdfCreator.openDocument();
+        pdfCreator.saveDocument();
+    }
+}
