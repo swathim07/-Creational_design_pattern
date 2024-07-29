@@ -1,0 +1,46 @@
+#1.	Create the Singleton Class:
+public class ConfigurationManager {
+    private static ConfigurationManager instance;
+    private Properties properties;
+
+    private ConfigurationManager() {
+        properties = new Properties();
+        // Load properties from a file or set default values
+        properties.setProperty("appName", "MyApp");
+        properties.setProperty("version", "1.0.0");
+    }
+
+    public static ConfigurationManager getInstance() {
+        if (instance == null) {
+            synchronized (ConfigurationManager.class) {
+                if (instance == null) {
+                    instance = new ConfigurationManager();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public String getProperty(String key) {
+        return properties.getProperty(key);
+    }
+
+    public void setProperty(String key, String value) {
+        properties.setProperty(key, value);
+    }
+}
+#2.	Using the Singleton Pattern:
+public class SingletonPatternDemo {
+    public static void main(String[] args) {
+        ConfigurationManager config1 = ConfigurationManager.getInstance();
+        ConfigurationManager config2 = ConfigurationManager.getInstance();
+
+        System.out.println(config1.getProperty("appName"));
+        config2.setProperty("version", "1.1.0");
+
+        System.out.println(config1.getProperty("version"));
+
+        // Verify both references point to the same instance
+        System.out.println(config1 == config2); // true
+    }
+}
